@@ -133,3 +133,9 @@ treemap.c:54:13: error: unused variable ‘newNode’ [-Werror=unused-variable]
 cc1: all warnings being treated as errors
 Compilation failed
 8f652c6
+Thu 14 Sep 2023 06:25:17 PM UTC: 
+ treemap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests:  11|6
+total_score: 15/70
+7b7fbb2
