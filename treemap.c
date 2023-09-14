@@ -73,7 +73,7 @@ Pair * searchTreeMap(TreeMap * tree, void* key) {
   TreeNode* aux = tree->root;
 
   while(aux != NULL){
-    if(key == aux->key) return aux->dat;
+    if(key == aux->key) return aux->data;
 
     else if(key < aux->key) aux = aux->left;
 
