@@ -54,13 +54,15 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
   // Arbol vacio case
   if (currentNode == NULL) {
     tree->root = createTreeNode(key, value);
+    tree->current = tree->root;// Actualizar current**
     return;
   }
 
   while (currentNode != NULL) {
       if (is_equal(tree, key, currentNode->pair->key)) {
-          currentNode->pair->value = value;
-          return;
+        currentNode->pair->value = value;
+        tree->current = currentNode; // Actualizar current**
+        return;
       }
       parentNode = currentNode;
 
@@ -69,18 +71,20 @@ void insertTreeMap(TreeMap * tree, void* key, void * value) {
           currentNode = currentNode->left;
 
           if (currentNode == NULL) {
-              parentNode->left = createTreeNode(key, value);
-              parentNode->left->parent = parentNode;
-              return;
+            parentNode->left = createTreeNode(key, value);
+            parentNode->left->parent = parentNode;
+            tree->current = parentNode->left; // Actualizar current**
+            return;
           }
       } else {
           // CMP keys, insert key > current key = insertar como hijo DER
           currentNode = currentNode->right;
 
           if (currentNode == NULL) {
-              parentNode->right = createTreeNode(key, value);
-              parentNode->right->parent = parentNode;
-              return;
+            parentNode->right = createTreeNode(key, value);
+            parentNode->right->parent = parentNode;
+            tree->current = parentNode->right; // Actualizar current**
+            return;
           }
       }
   } 
