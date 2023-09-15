@@ -240,3 +240,26 @@ Fri 15 Sep 2023 11:31:51 PM UTC:
  tests:  19|3
 total_score: 35/70
 6f9d30e
+Fri 15 Sep 2023 11:33:04 PM UTC: 
+ treemap.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
+In file included from test.c:4:
+treemap.c: In function ‘nextTreeMap’:
+treemap.c:146:43: error: ‘next’ undeclared (first use in this function); did you mean ‘nex’?
+  146 |         if (tree->current->right != NULL) next = minimum(tree->curent->right);
+      |                                           ^~~~
+      |                                           nex
+treemap.c:146:43: note: each undeclared identifier is reported only once for each function it appears in
+treemap.c:146:64: error: ‘TreeMap’ has no member named ‘curent’; did you mean ‘current’?
+  146 |         if (tree->current->right != NULL) next = minimum(tree->curent->right);
+      |                                                                ^~~~~~
+      |                                                                current
+treemap.c:157:29: error: ‘successor’ undeclared (first use in this function)
+  157 |             tree->current = successor;
+      |                             ^~~~~~~~~
+treemap.c:145:19: error: unused variable ‘nex’ [-Werror=unused-variable]
+  145 |         TreeNode* nex = NULL;
+      |                   ^~~
+cc1: all warnings being treated as errors
+Compilation failed
+8a60b4e

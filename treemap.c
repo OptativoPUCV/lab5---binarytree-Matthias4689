@@ -141,18 +141,21 @@ Pair * firstTreeMap(TreeMap * tree) {
 }
 
 Pair * nextTreeMap(TreeMap * tree) {
-  
-  if (tree != NULL && tree->current != NULL) {
-	  // Hay hijo Der
-    if (tree->current->right != NULL) return minimum(tree->current->right)->pair;
-    else {
-      // No hay hijo Der
-      TreeNode* aux = tree->current;
-            
-	    while (aux->parent != NULL && aux->parent->right == aux) {
-                aux = aux->parent;
+    if (tree != NULL && tree->current != NULL) {
+        TreeNode* nex = NULL;
+        if (tree->current->right != NULL) next = minimum(tree->curent->right);
+ 
+        else {
+            TreeNode* parent = tree->current->parent;
+            while (parent != NULL && tree->current == parent->right) {
+                tree->current = parent;
+                parent = parent->parent;
             }
-            return (aux->parent != NULL) ? aux->pair : NULL;
+            next = parent;
+        }
+        if (next != NULL) {
+            tree->current = successor;
+            return next->pair;
         }
     }
     return NULL;
