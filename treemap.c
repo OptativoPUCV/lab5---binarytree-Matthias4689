@@ -48,32 +48,42 @@ TreeMap * createTreeMap(int (*lower_than) (void* key1, void* key2)) {
 
 
 void insertTreeMap(TreeMap * tree, void* key, void * value) {
-  TreeNode* newNode = createTreeNode(key, value);
+  TreeNode* currentNode = tree->root;
+  TreeNode* parentNode = NULL;
 
-   if(tree->root == NULL) tree->root = newNode;
-    else {
-        TreeNode* aux = tree->root;
-        while(1) {
-            if(key < aux->key) {
-                if(aux->left == NULL) {
-                    aux->left = newNode;
-                    break;
-                } else {
-                    aux = aux->left;
-                }
-            } else if(key > aux->key) {
-                if(aux->right == NULL) {
-                    aux->right = newNode;
-                    break;
-                } else {
-                    aux = aux->right;
-                }
-            } else { 
-                aux->value = value;
-                free(newNode); 
-                break;
-            }
-        }
+  // Arbol vacio case
+  if (currentNode == NULL) {
+    tree->root = createTreeNode(key, value);
+    return;
+  }
+
+  while (currentNode != NULL) {
+      if (is_equal(tree, key, currentNode->pair->key)) {
+          currentNode->pair->value = value;
+          return;
+      }
+      parentNode = currentNode;
+
+      // CMP keys, insert key < current key = insertar como hijo IZQ
+      if (tree->lower_than(key, currentNode->pair->key)) {
+          currentNode = currentNode->left;
+
+          if (currentNode == NULL) {
+              parentNode->left = createTreeNode(key, value);
+              parentNode->left->parent = parentNode;
+              return;
+          }
+      } else {
+          // CMP keys, insert key > current key = insertar como hijo DER
+          currentNode = currentNode->right;
+
+          if (currentNode == NULL) {
+              parentNode->right = createTreeNode(key, value);
+              parentNode->right->parent = parentNode;
+              return;
+          }
+      }
+  } 
 }
 
 TreeNode * minimum(TreeNode * x){
