@@ -101,10 +101,10 @@ void removeNode(TreeMap *tree, TreeNode* node) {
     TreeNode* parent = NULL;
  
     while(aux != NULL && aux != node) {
-      parent = aux;
+        parent = aux;
 
-      if (tree->lower_than(node->pair->key, aux->pair->key)) aux = aux->left;
-      else aux = aux->right;
+        if (tree->lower_than(node->pair->key, aux->pair->key)) aux = aux->left;
+        else aux = aux->right;
     }
 
     if(aux == NULL) return; // El nodo no existe
@@ -116,8 +116,6 @@ void removeNode(TreeMap *tree, TreeNode* node) {
         } 
         else tree->root = NULL;
 
-        free(aux->pair->key);
-        free(aux->pair->value);
         free(aux->pair);
         free(aux);
     }
@@ -131,8 +129,6 @@ void removeNode(TreeMap *tree, TreeNode* node) {
         } 
         else tree->root = child;
 
-        free(aux->pair->key);
-        free(aux->pair->value);
         free(aux->pair);
         free(aux);
     }
