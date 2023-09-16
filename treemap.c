@@ -175,20 +175,21 @@ Pair * searchTreeMap(TreeMap * tree, void* key) {
 
 
 Pair * upperBound(TreeMap * tree, void* key) {
-    if (tree == NULL || key == NULL) return NULL;
+  if (tree == NULL || key == NULL) return NULL;
 
-    TreeNode* current = tree->root;
-    Pair* upBound = NULL;
+  TreeNode* current = tree->root;
+  Pair* upBound = NULL;
 
-    while (current != NULL) {
-        if (!tree->lower_than(current->pair->key, key)){
-            upBound = current->pair;
-            current = current->left;
-        } 
-        else current = current->right;
-    }
+  //  Buscar el par con key = o < a current key
+  while (current != NULL) {
+      if (!tree->lower_than(current->pair->key, key)){
+          upBound = current->pair;
+          current = current->left;
+      } 
+      else current = current->right;
+  }
 
-    return upBound;
+  return upBound;
 }
 
 Pair * firstTreeMap(TreeMap * tree) {
