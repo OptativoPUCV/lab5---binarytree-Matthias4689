@@ -126,8 +126,12 @@ void removeNode(TreeMap *tree, TreeNode* node) {
         if(aux != tree->root) {
             if(parent->left == aux) parent->left = child;
             else parent->right = child;
+            child->parent = parent; // Actualizar el puntero parent del nodo hijo
         } 
-        else tree->root = child;
+        else {
+            tree->root = child;
+            child->parent = NULL; // El nodo hijo se convierte en la raíz
+        }
 
         free(aux->pair);
         free(aux);
