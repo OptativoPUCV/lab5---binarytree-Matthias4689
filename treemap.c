@@ -97,52 +97,54 @@ TreeNode * minimum(TreeNode * x){
 
 
 void removeNode(TreeMap *tree, TreeNode* node) {
+    TreeNode* aux = tree->root;
     TreeNode* parent = NULL;
-    TreeNode* nodeDelete = searchTreeMap(tree, node->pair->key);
+ 
+    while(aux != NULL && aux != node) {
+      parent = aux;
 
-    if (nodeDelete != NULL) {
-        if (tree->root == nodeDelete) parent = NULL;
+      if (tree->lower_than(node->pair->key, aux->pair->key)) aux = aux->left;
+      else aux = aux->right;
+    }
 
-        else parent = searchTreeMap(tree, parent->pair->key);
+    if(aux == NULL) return; // El nodo no existe
+    // Nodo sin hijos
+    if(aux->left == NULL && aux->right == NULL) {
+        if(aux != tree->root) {
+            if (parent->left == aux) parent->left = NULL;
+            else parent->right = NULL;
+        } 
+        else tree->root = NULL;
 
-        // Realizar la eliminación en 3 tipos de casos, sin hijos - 1 hijo - 2 hijos
-        if (nodeDelete->left == NULL && nodeDelete->right == NULL) {
-            // Nodo sin hijos
-            if (parent != NULL) {
-                if (parent->left == nodeDelete) parent->left = NULL;
-                else parent->right = NULL;
+        free(aux->pair->key);
+        free(aux->pair->value);
+        free(aux->pair);
+        free(aux);
+    }
+    // Nodo con 1 hijo
+    else if(aux->left == NULL || aux->right == NULL) {
+        TreeNode* child = (aux->left != NULL) ? aux->left : aux->right;
 
-            } else tree->root = NULL;
+        if(aux != tree->root) {
+            if(parent->left == aux) parent->left = child;
+            else parent->right = child;
+        } 
+        else tree->root = child;
 
-            free(nodeDelete->pair->key);
-            free(nodeDelete->pair->value);
-            free(nodeDelete->pair);
-            free(nodeDelete);
-
-        } else if (nodeDelete->left == NULL || nodeDelete->right == NULL) {
-            // Nodo con 1 hijo
-            TreeNode* child = (nodeDelete->left != NULL) ? nodeDelete->left : nodeDelete->right;
-
-            if (parent != NULL) {
-                if (parent->left == nodeDelete) parent->left = child;
-                else parent->right = child;
-            } else tree->root = child;
-
-            free(nodeDelete->pair->key);
-            free(nodeDelete->pair->value);
-            free(nodeDelete->pair);
-            free(nodeDelete);
-
-        } else {
-            // Nodo con 3 hijos
-            TreeNode* next = minimum(nodeDelete->right);
-            nodeDelete->pair->key = next->pair->key;
-            nodeDelete->pair->value = next->pair->value;
-            // Llamada recursiva
-            removeNode(tree, next);
-        }
+        free(aux->pair->key);
+        free(aux->pair->value);
+        free(aux->pair);
+        free(aux);
+    }
+    // Nodo con 2 hijos
+    else {
+        TreeNode* next = minimum(aux->right);
+        aux->pair->key = next->pair->key;
+        aux->pair->value = next->pair->value;
+        removeNode(tree, next);
     }
 }
+
 
 void eraseTreeMap(TreeMap * tree, void* key){
     if (tree == NULL || tree->root == NULL) return;
