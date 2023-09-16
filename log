@@ -321,3 +321,9 @@ treemap.c:107:3: error: expected ‘}’ before ‘else’
       |   ^~~~
 Compilation failed
 be3792d
+Sat 16 Sep 2023 01:06:18 AM UTC: 
+ treemap.c | 66 +++++++++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 39 insertions(+), 27 deletions(-)
+ tests:  23|2
+total_score: 50/70
+682efe3
